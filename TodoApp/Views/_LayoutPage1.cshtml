@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+	@*レイザー→htmlの中にc#のコードを埋め込む。(viewエンジン)
+	＠～サーバ債を出実行クライアントに作成したhtmlが返される*@
+	<link href="~/Content/bootstrap.min.css" rel="stylesheet"/>
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+	<div class="container">
+		@*ログインしているかどうか→*@
+		@if (Request.IsAuthenticated)
+		{
+			@Html.ActionLink("ログアウト","SignOut",new { Controller = "Login" });
+		}
+	</div>
+    @*container左右に適切な余白*@
+	<div class="container">
+        @RenderBody()
+    </div>
+</body>
+</html>

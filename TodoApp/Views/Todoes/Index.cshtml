@@ -1,0 +1,62 @@
+﻿@*受け取ったデータを変数modelに格納
+Controllerから受け取るデータの定義
+Todoクラスのデータを受け取る
+＠～レイザーのコードナゲット→サーバサイドで処理される*@
+@model IEnumerable<TodoApp.Models.Todo>
+
+@{
+	//viewBag→viewで使う値を保持、Controllerとviewの間でデータをやり取りする際に使う
+	ViewBag.Title = "Index";
+	//Layout→共通レイアウトの指定
+	Layout = "~/Views/_LayoutPage1.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @*html→HTMLヘルパーと呼ばれる
+	HTMLを生成する様々なメソッドがある。
+	ActionLink→リンクを生成するメソッド*@
+	@Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+			@*DisplayNameFor→modelも定義名に応じてプロパティの表示名を出力。*@
+            @Html.DisplayNameFor(model => model.Summary)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Detail)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Limit)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Done)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Summary)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Detail)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Limit)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Done)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>
