@@ -29,7 +29,16 @@ namespace TodoApp.Controllers
         //リクエストに応じて処理の受け渡し先を決定すること→ルーティング→ルートコンフィグが案内
         public ActionResult Index()
         {
-            return View(db.Todoes.ToList());
+            //DBから現在ログインしているユーザのオブジェクトを取得。
+            var user = db.Users.Where(item => item.UserName == User.Identity.Name).FirstOrDefault();
+
+            if (user != null)
+            {
+                return View(user.Todes);
+            }
+            //userがnullだったら空のリストを返す
+            return View(new LinkedList<Todo>());
+            
         }
 
         // GET: Todoes/Details/5
@@ -68,17 +77,23 @@ namespace TodoApp.Controllers
         //Bind→PostされたデータをTodoモデルに紐づける
         public ActionResult Create([Bind(Include = "Id,Summary,Detail,Limit,Done")] Todo todo)
         {
-            //入力内容が敵世知かどうか返す
+            //入力内容が適切かどうか返す
             if (ModelState.IsValid)
             {
-                //OK→登録処理
-                //DBセットに登録
-                db.Todoes.Add(todo);
-                //DBセットの内容をDBへ反映
-                db.SaveChanges();
-                //index(アクションメソッド)に処理を転送
-                //ここでは処理が完了すると一覧画面に戻る。
-                return RedirectToAction("Index");
+                var user = db.Users.Where(item => item.UserName == User.Identity.Name).FirstOrDefault();
+
+                if (user != null)
+                {
+                    todo.User = user;
+                    //OK→登録処理
+                    //DBセットに登録
+                    db.Todoes.Add(todo);
+                    //DBセットの内容をDBへ反映
+                    db.SaveChanges();
+                    //index(アクションメソッド)に処理を転送
+                    //ここでは処理が完了すると一覧画面に戻る。
+                    return RedirectToAction("Index");
+                }
             }
             //NG→入力内容をCreate.schtmlに返す
             return View(todo);

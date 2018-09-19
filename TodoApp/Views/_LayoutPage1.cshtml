@@ -11,9 +11,16 @@
 <body>
 	<div class="container">
 		@*ログインしているかどうか→*@
+		@*管理画面へのリンクは共通画面へ*@
 		@if (Request.IsAuthenticated)
 		{
 			@Html.ActionLink("ログアウト","SignOut",new { Controller = "Login" });
+
+			if (User.IsInRole("Administrators"))
+			{
+				<span>|</span>
+				@Html.ActionLink("ユーザー管理", "Index", new { Controller = "Users" });
+			}
 		}
 	</div>
     @*container左右に適切な余白*@

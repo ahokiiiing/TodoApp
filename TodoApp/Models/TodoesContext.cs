@@ -15,6 +15,9 @@ namespace TodoApp.Models
         // DBから取得したTodoを格納するDBセットを用意
         //このプロパティからデータセットの取得・更新を行う。
         public DbSet<Todo> Todoes { get; set; }
+        //ユーザとロールも管理していく。
+        public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
 
     }
 }

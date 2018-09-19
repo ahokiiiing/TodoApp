@@ -16,7 +16,7 @@ namespace TodoApp.Controllers
         //ユーザー認証を行うのでCustomMembershipProviderを保持 
         //サイド代入などなし
         readonly CustomMembershipProvider membershipProvider = new CustomMembershipProvider();
-        private object formsAuthentication;
+        //private object formsAuthentication;
 
         // GET: Login
         public ActionResult Index()
